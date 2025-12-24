@@ -1,6 +1,6 @@
 <?php
 // require: jika file koneksi error, script akan berhenti
-require 'koneksi.php';
+require '../koneksi.php';
 
 // blok kode untuk menyimpan data (CREATE)
 if (isset($_POST['submit'])) {
@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
 
     if ($query) {
         // sukses -> kembali ke daftar mahasiswa
-        header('Location: index.php?p=mahasiswa');
+        header('Location: ../index.php?p=mahasiswa');
         exit;
     } else {
         echo "Gagal menyimpan data: " . $koneksi->error;
@@ -37,7 +37,7 @@ if (isset($_POST['update'])) {
     $query = $koneksi->query($sql);
 
     if ($query) {
-        header('Location: index.php?p=mahasiswa');
+        header('Location: ../index.php?p=mahasiswa');
         exit;
     } else {
         echo "Gagal mengubah data: " . $koneksi->error;
@@ -51,7 +51,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] === 'hapus' && isset($_GET['nim'])) {
     $query = $koneksi->query("DELETE FROM mahasiswa WHERE nim = '$nim'");
 
     if ($query) {
-        header('Location: index.php?p=mahasiswa');
+        header('Location: ../index.php?p=mahasiswa');
         exit;
     } else {
         echo "Gagal menghapus data: " . $koneksi->error;

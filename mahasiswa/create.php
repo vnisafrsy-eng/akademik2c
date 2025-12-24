@@ -1,6 +1,6 @@
 <h1>Tambah Mahasiswa</h1>
 
-<form action="proses.php" method="post">
+<form action="mahasiswa/proses.php" method="post">
   <div class="mb-3">
     <label class="form-label">NIM</label>
     <input type="text" name="nim" class="form-control" required>
