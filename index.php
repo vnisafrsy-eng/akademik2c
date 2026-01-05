@@ -1,3 +1,14 @@
+<?php
+//session | cookies
+
+session_start();
+if(!isset($_SESSION['login'])){
+  header("Location: login.php");
+  
+
+}
+?>
+
 <!doctype html>
 <html lang="id">
   <head>
