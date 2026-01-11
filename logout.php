@@ -1,6 +1,6 @@
 <?php
 session_start();
-sessio_destroy();
+session_destroy();
 header("Location: login.php");
 
 ?>

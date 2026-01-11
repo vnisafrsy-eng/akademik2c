@@ -1,7 +1,9 @@
 <?php
-session_start();
+// Proteksi session (kecuali login)
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Proteksi halaman
 if (!isset($_SESSION['login'])) {
     header("Location: login.php");
     exit;
@@ -14,22 +16,18 @@ if (!isset($_SESSION['login'])) {
     <title>Aplikasi DB Akademik</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-info">
     <div class="container">
         <a class="navbar-brand fw-bold" href="index.php">DB Akademik</a>
 
-        <!-- TOGGLER -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- MENU -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
 
@@ -45,7 +43,6 @@ if (!isset($_SESSION['login'])) {
                     <a class="nav-link" href="index.php?p=mahasiswa_create">Tambah Mahasiswa</a>
                 </li>
 
-                <!-- DROPDOWN PROGRAM STUDI -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                         Program Studi
@@ -58,7 +55,6 @@ if (!isset($_SESSION['login'])) {
                         <li><a class="dropdown-item" href="index.php?p=prodi_animasi">Animasi</a></li>
                     </ul>
                 </li>
-
             </ul>
 
             <a href="logout.php" class="btn btn-danger btn-sm">Logout</a>
@@ -66,57 +62,4 @@ if (!isset($_SESSION['login'])) {
     </div>
 </nav>
 
-<!-- KONTEN -->
 <div class="container my-4">
-<?php
-$page = $_GET['p'] ?? 'home';
-
-switch ($page) {
-
-    case 'home':
-        include 'home.php';
-        break;
-
-    case 'mahasiswa':
-        include 'mahasiswa/list.php';
-        break;
-
-    case 'mahasiswa_create':
-        include 'mahasiswa/create.php';
-        break;
-
-    case 'mahasiswa_edit':
-        include 'mahasiswa/edit.php';
-        break;
-
-    // PROGRAM STUDI
-    case 'prodi_trpl':
-        include 'program_studi/trpl.php';
-        break;
-
-    case 'prodi_si':
-        include 'program_studi/si.php';
-        break;
-
-    case 'prodi_mi':
-        include 'program_studi/mi.php';
-        break;
-
-    case 'prodi_tk':
-        include 'program_studi/tk.php';
-        break;
-
-    case 'prodi_animasi':
-        include 'program_studi/animasi.php';
-        break;
-
-    default:
-        include 'home.php';
-}
-?>
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
