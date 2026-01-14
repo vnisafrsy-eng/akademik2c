@@ -7,20 +7,26 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$id   = $_SESSION['user_id'];
-$nama = htmlspecialchars($_POST['nama']);
+if (isset($_POST['update'])) {
+    $id   = $_SESSION['user_id'];
+    $nama = mysqli_real_escape_string($koneksi, $_POST['nama']);
 
-if (!empty($_POST['password'])) {
-    // jika password diubah
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $sql = "UPDATE users SET nama='$nama', password='$password' WHERE id='$id'";
-} else {
-    // jika password tidak diubah
-    $sql = "UPDATE users SET nama='$nama' WHERE id='$id'";
-}
+    if (!empty($_POST['password'])) {
+        // Enkripsi password baru
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $sql = "UPDATE pengguna SET nama_lengkap='$nama', password='$password' WHERE id='$id'";
+    } else {
+        // Update nama saja
+        $sql = "UPDATE pengguna SET nama_lengkap='$nama' WHERE id='$id'";
+    }
 
-if ($koneksi->query($sql)) {
-    header("Location: profile.php?status=success");
+    if ($koneksi->query($sql)) {
+        header("Location: profile.php?status=success");
+        exit;
+    } else {
+        die("Gagal update data: " . $koneksi->error);
+    }
 } else {
-    echo "Gagal update profil";
+    header("Location: profile.php");
+    exit;
 }
