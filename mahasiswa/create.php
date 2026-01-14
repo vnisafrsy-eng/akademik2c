@@ -12,6 +12,23 @@
   </div>
 
   <div class="mb-3">
+    <label class="form-label">Program Studi</label>
+    <select name="prodi_id" class="form-select" required>
+        <option value="">-- Pilih Program Studi --</option>
+        <?php
+        // Query untuk mengambil data prodi
+        $query_prodi = $koneksi->query("SELECT * FROM program_studi ORDER BY nama_prodi ASC");
+        
+        // Looping data prodi menjadi pilihan (option)
+        while ($prodi = $query_prodi->fetch_assoc()) {
+            // Gunakan ID sebagai value untuk memudahkan relasi tabel
+            echo "<option value='" . $prodi['id'] . "'>" . htmlspecialchars($prodi['nama_prodi']) . " (" . $prodi['jenjang'] . ")</option>";
+        }
+        ?>
+    </select>
+  </div>
+
+  <div class="mb-3">
     <label class="form-label">Tanggal Lahir</label>
     <input type="date" name="tgl_lahir" class="form-control">
   </div>

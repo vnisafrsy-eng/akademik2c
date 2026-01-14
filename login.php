@@ -48,8 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="utf-8">
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 
@@ -79,8 +78,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="password" name="password" class="form-control" required>
                         </div>
 
-                        <button class="btn btn-primary w-100">Login</button>
+                        <button class="btn btn-primary w-100 mb-3">Login</button>
                     </form>
+
+                    <div class="text-center mt-3">
+                        <p class="mb-0">Belum punya akun? <a href="register.php" class="text-decoration-none">Daftar di sini</a></p>
+                    </div>
 
                 </div>
             </div>
