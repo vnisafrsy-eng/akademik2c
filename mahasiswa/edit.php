@@ -1,27 +1,34 @@
-<h1>Input Mahasiswa</h1>
-<?php 
-require 'koneksi.php'; //memasukkan file koneksi.php agar bisa menggunakan variabel $koneksi
-$id = $_GET['key'];
-$edit = $koneksi->query("SELECT * FROM mahasiswa WHERE nim = '$id'");
-$data = $edit->fetch_assoc();
+<?php
+// mahasiswa/edit.php
+require 'koneksi.php';
+
+// Ambil ID dari URL (sesuaikan jika di URL pakai nama 'key' atau 'id')
+$id = $_GET['id'] ?? $_GET['key'] ?? ''; 
+
+if ($id == '') {
+    echo "ID tidak ditemukan!";
+    exit;
+}
+
+// Ambil data mahasiswa berdasarkan ID
+$stmt = $koneksi->prepare("SELECT * FROM mahasiswa WHERE id = ?"); // Sesuaikan nama kolom primary key Anda
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_assoc();
+
+if (!$data) {
+    echo "Data mahasiswa tidak ditemukan di database!";
+    exit;
+}
 ?>
- 
-<form action="proses.php" method="POST">
-    <input type="text" name="nim" value="<?= $data['nim'] ?>" hidden>
+
+<h3>Edit Data Mahasiswa</h3>
+<form method="POST" action="mahasiswa/update.php">
+    <input type="hidden" name="id" value="<?= $data['id'] ?>">
     <div class="mb-3">
-      <label for="nama" class="form-label">Nama</label>
-      <input type="text" class="form-control" id="exampleFormControlInput1" name="nama_mhs" value="<?= $data['nama_mhs'] ?>" required>
+        <label>Nama Mahasiswa</label>
+        <input type="text" name="nama" class="form-control" value="<?= htmlspecialchars($data['nama']) ?>">
     </div>
-    <div class="mb-3">
-      <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-      <input type="date" class="form-control" id="exampleFormControlInput1" name="tgl_lahir" value="<?= $data['tgl_lahir'] ?>">
-    </div>
-    <div class="mb-3">
-      <label for="alamat" class="form-label">Alamat</label>
-      <textarea class="form-control" name="alamat" id="exampleFormControlTextarea1" rows="3"><?= $data['alamat'] ?></textarea>
-    </div>
-    <div class="mb-3">
-        <input type="submit" name="update" class="btn btn-primary" value="Submit"> 
-        <a href="list.php" class="btn btn-secondary">List Mahasiswa</a>
-    </div>
+    <button type="submit" class="btn btn-primary">Update Data</button>
 </form>
