@@ -23,8 +23,7 @@ $user = $koneksi->query("SELECT * FROM pengguna WHERE id='$id'")->fetch_assoc();
 
     <div class="mb-3">
         <label>Email</label>
-        <input type="email" class="form-control"
-               value="<?= $pengguna['email']; ?>" readonly>
+       <input type="text" name="nama" class="form-control" value="<?= $user['nama_lengkap']; ?>" required>
     </div>
 
     <div class="mb-3">
