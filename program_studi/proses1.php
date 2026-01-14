@@ -4,29 +4,28 @@
 
 session_start();
 
-require __DIR__ . '/../koneksi.php'; //memasukkan file koneksi.php agar bisa menggunakan variabel $koneksi
-//blok kode untuk menyimpan data
+require __DIR__ . '/../koneksi.php'; 
+
 if(isset($_POST['submit'])){
     $nama_prodi = $_POST['nama_prodi'];
     $jenjang = $_POST['jenjang'];  
     $akreditasi = $_POST['akreditasi']; 
     $keterangan = $_POST['keterangan'];
     $pengguna = $_SESSION['user_id'];
-  //fungsi date untuk mengambil akreditasi sekarang dengan format tahun-bulan-akreditasi
 
 
 
     $sql ="INSERT INTO program_studi(nama_prodi,jenjang,akreditasi,keterangan,pengguna_id)
             VALUES ('$nama_prodi','$jenjang','$akreditasi','$keterangan','$pengguna')";
-    $query = $koneksi->query($sql); //eksekusi perintah sql(query))
+    $query = $koneksi->query($sql); 
     if($query){
-        header('Location: ../index.php?p=programstudi'); //mengalihkan ke halaman list.php
+        header('Location: ../index.php?p=programstudi'); 
     }
     else {
         echo "Gagal menyimpan data: " . $koneksi->error;
     }    
 }
-//blok kode untuk update data
+
 
 if(isset($_POST['update'])){
     $id = $_POST['id'];

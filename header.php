@@ -48,6 +48,10 @@ if (!isset($_SESSION['login'])) {
                     </li>
                 </ul>
 
+                <li class="nav-item">
+                    <a class="nav-link" href="profile.php">Edit Profil</a>
+                </li>
+
                 <a href="logout.php" class="btn btn-danger btn-sm">Logout</a>
             </div>
         </div>
