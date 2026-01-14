@@ -1,4 +1,4 @@
-<h1>Tambah Mahasiswa</h1>
+<h1>Data Mahasiswa</h1>
 
 <form action="mahasiswa/proses.php" method="post">
   <div class="mb-3">

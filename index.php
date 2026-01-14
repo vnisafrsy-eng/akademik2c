@@ -3,120 +3,56 @@ session_start();
 
 // Proteksi halaman
 if (!isset($_SESSION['login'])) {
-    header("Location: login.php");
-    exit;
+  header("Location: login.php");
+  exit;
 }
+include('header.php');
 ?>
-<!doctype html>
-<html lang="id">
-<head>
-    <meta charset="utf-8">
-    <title>Aplikasi DB Akademik</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+  <!-- KONTEN -->
+  <div class="container my-4">
+    <?php
+    $page = $_GET['p'] ?? 'home';
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-info">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="index.php">DB Akademik</a>
+    switch ($page) {
 
-        <!-- TOGGLER -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- MENU -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php">Home</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?p=mahasiswa">Mahasiswa</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?p=mahasiswa_create">Tambah Mahasiswa</a>
-                </li>
-
-                <!-- DROPDOWN PROGRAM STUDI -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        Program Studi
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="index.php?p=prodi_trpl">TRPL</a></li>
-                        <li><a class="dropdown-item" href="index.php?p=prodi_si">Sistem Informasi</a></li>
-                        <li><a class="dropdown-item" href="index.php?p=prodi_mi">Manajemen Informatika</a></li>
-                        <li><a class="dropdown-item" href="index.php?p=prodi_tk">Teknik Komputer</a></li>
-                        <li><a class="dropdown-item" href="index.php?p=prodi_animasi">Animasi</a></li>
-                    </ul>
-                </li>
-
-            </ul>
-
-            <a href="logout.php" class="btn btn-danger btn-sm">Logout</a>
-        </div>
-    </div>
-</nav>
-
-<!-- KONTEN -->
-<div class="container my-4">
-<?php
-$page = $_GET['p'] ?? 'home';
-
-switch ($page) {
-
-    case 'home':
+      case 'home':
         include 'home.php';
         break;
 
-    case 'mahasiswa':
+      case 'mahasiswa':
         include 'mahasiswa/list.php';
         break;
 
-    case 'mahasiswa_create':
+      case 'mahasiswa_create':
         include 'mahasiswa/create.php';
         break;
 
-    case 'mahasiswa_edit':
+      case 'mahasiswa_edit':
         include 'mahasiswa/edit.php';
         break;
 
-    // PROGRAM STUDI
-    case 'prodi_trpl':
-        include 'program_studi/trpl.php';
+      // PROGRAM STUDI
+      case 'program_studi':
+        include 'program_studi/list1.php';
         break;
 
-    case 'prodi_si':
-        include 'program_studi/si.php';
+      case 'program_studi_create':
+        include 'program_studi/create1.php';
         break;
 
-    case 'prodi_mi':
-        include 'program_studi/mi.php';
+      case 'program_studi_edit':
+        include 'program_studi/edit1.php';
         break;
 
-    case 'prodi_tk':
-        include 'program_studi/tk.php';
-        break;
-
-    case 'prodi_animasi':
-        include 'program_studi/animasi.php';
-        break;
-
-    default:
+      default:
         include 'home.php';
-}
-?>
-</div>
+    }
+    ?>
+  </div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

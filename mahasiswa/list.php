@@ -1,5 +1,5 @@
 <h1>List Data Mahasiswa</h1>
-<a href="index.php?p=create" class="btn btn-primary">Tambah Data</a>
+<a href="index.php?p=mahasiswa_create" class="btn btn-primary">Tambah Data</a>
 <br></br>
 
 <table class="table table-hover table-striped table-bordered">
