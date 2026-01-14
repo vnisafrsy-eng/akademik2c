@@ -10,12 +10,13 @@ if (isset($_POST['submit'])) {
     $jenjang    = $_POST['jenjang'];
     $akreditasi = $_POST['akreditasi'];
     $keterangan = $_POST['keterangan'];
-    $pengguna   = $_SESSION['user_id'];
+    $pengguna   = $_SESSION['user_id'] ?? 0; // Pastikan session ada
 
-    $sql = "INSERT INTO program_studi (nama_prodi, jenjang, akreditasi, keterangan, pengguna_id)
-            VALUES ('$nama_prodi', '$jenjang', '$akreditasi', '$keterangan', '$pengguna')";
+    // Menggunakan Prepared Statement untuk keamanan
+    $stmt = $koneksi->prepare("INSERT INTO program_studi (nama_prodi, jenjang, akreditasi, keterangan, pengguna_id) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssi", $nama_prodi, $jenjang, $akreditasi, $keterangan, $pengguna);
 
-    if ($koneksi->query($sql)) {
+    if ($stmt->execute()) {
         header('Location: ../index.php?p=program_studi');
         exit;
     } else {
@@ -31,12 +32,10 @@ if (isset($_POST['update'])) {
     $akreditasi = $_POST['akreditasi'];
     $keterangan = $_POST['keterangan'];
 
-    $sql = "UPDATE program_studi SET 
-            nama_prodi='$nama_prodi', jenjang='$jenjang', 
-            akreditasi='$akreditasi', keterangan='$keterangan' 
-            WHERE id='$id'";
+    $stmt = $koneksi->prepare("UPDATE program_studi SET nama_prodi=?, jenjang=?, akreditasi=?, keterangan=? WHERE id=?");
+    $stmt->bind_param("ssssi", $nama_prodi, $jenjang, $akreditasi, $keterangan, $id);
 
-    if ($koneksi->query($sql)) {
+    if ($stmt->execute()) {
         header('Location: ../index.php?p=program_studi');
         exit;
     } else {
@@ -47,8 +46,13 @@ if (isset($_POST['update'])) {
 // DELETE
 if (isset($_GET['aksi']) && $_GET['aksi'] == 'hapus') {
     $id = $_GET['id'];
-    $koneksi->query("DELETE FROM program_studi WHERE id='$id'");
-    header('Location: ../index.php?p=program_studi');
-    exit;
+    
+    $stmt = $koneksi->prepare("DELETE FROM program_studi WHERE id=?");
+    $stmt->bind_param("i", $id);
+    
+    if ($stmt->execute()) {
+        header('Location: ../index.php?p=program_studi');
+        exit;
+    }
 }
 ?>
