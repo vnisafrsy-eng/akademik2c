@@ -1,34 +1,50 @@
 <?php
-// mahasiswa/edit.php
 require 'koneksi.php';
 
-// Ambil ID dari URL (sesuaikan jika di URL pakai nama 'key' atau 'id')
-$id = $_GET['id'] ?? $_GET['key'] ?? ''; 
+// ambil NIM dari URL
+$nim = $_GET['nim'] ?? '';
 
-if ($id == '') {
-    echo "ID tidak ditemukan!";
+if ($nim == '') {
+    echo "NIM tidak ditemukan!";
     exit;
 }
 
-// Ambil data mahasiswa berdasarkan ID
-$stmt = $koneksi->prepare("SELECT * FROM mahasiswa WHERE id = ?"); // Sesuaikan nama kolom primary key Anda
-$stmt->bind_param("i", $id);
+// ambil data mahasiswa
+$stmt = $koneksi->prepare("SELECT * FROM mahasiswa WHERE nim = ?");
+$stmt->bind_param("s", $nim);
 $stmt->execute();
 $result = $stmt->get_result();
 $data = $result->fetch_assoc();
 
 if (!$data) {
-    echo "Data mahasiswa tidak ditemukan di database!";
+    echo "Data mahasiswa tidak ditemukan!";
     exit;
 }
 ?>
 
 <h3>Edit Data Mahasiswa</h3>
-<form method="POST" action="mahasiswa/update.php">
-    <input type="hidden" name="id" value="<?= $data['id'] ?>">
+
+<form method="POST" action="mahasiswa/proses.php">
+    <input type="hidden" name="nim" value="<?= $data['nim']; ?>">
+
     <div class="mb-3">
         <label>Nama Mahasiswa</label>
-        <input type="text" name="nama" class="form-control" value="<?= htmlspecialchars($data['nama']) ?>">
+        <input type="text" name="nama_mhs" class="form-control"
+               value="<?= htmlspecialchars($data['nama_mhs']); ?>" required>
     </div>
-    <button type="submit" class="btn btn-primary">Update Data</button>
+
+    <div class="mb-3">
+        <label>Tanggal Lahir</label>
+        <input type="date" name="tgl_lahir" class="form-control"
+               value="<?= $data['tgl_lahir']; ?>">
+    </div>
+
+    <div class="mb-3">
+        <label>Alamat</label>
+        <textarea name="alamat" class="form-control"><?= htmlspecialchars($data['alamat']); ?></textarea>
+    </div>
+
+    <button type="submit" name="update" class="btn btn-primary">
+        Update Data
+    </button>
 </form>

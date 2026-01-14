@@ -32,6 +32,7 @@ if (isset($_POST['update'])) {
                 alamat='$alamat'
             WHERE nim='$nim'";
 
+
     if ($koneksi->query($sql)) {
         header("Location: ../index.php?p=mahasiswa");
         exit;
@@ -41,13 +42,16 @@ if (isset($_POST['update'])) {
 }
 
 // DELETE
-if (isset($_GET['aksi'], $_GET['nim']) && $_GET['aksi'] === 'hapus') {
+if (
+    isset($_GET['aksi'], $_GET['nim']) &&
+    $_GET['aksi'] === 'hapus'
+) {
     $nim = $_GET['nim'];
 
     if ($koneksi->query("DELETE FROM mahasiswa WHERE nim='$nim'")) {
         header("Location: ../index.php?p=mahasiswa");
         exit;
     } else {
-        echo "Gagal hapus data";
+        echo "Gagal menghapus data: " . $koneksi->error;
     }
 }

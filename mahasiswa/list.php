@@ -1,6 +1,8 @@
 <h1>List Data Mahasiswa</h1>
-<a href="index.php?p=mahasiswa_create" class="btn btn-primary">Tambah Data</a>
-<br></br>
+
+<a href="index.php?p=mahasiswa_create" class="btn btn-primary mb-3">
+    Tambah Data
+</a>
 
 <table class="table table-hover table-striped table-bordered">
   <thead>
@@ -15,21 +17,32 @@
   </thead>
 
   <tbody>
-    <?php 
-      require 'koneksi.php';
-      $tampil = $koneksi->query("SELECT * FROM mahasiswa");
+    <?php
+      // koneksi SUDAH dari index.php
+      $result = $koneksi->query("SELECT * FROM mahasiswa");
       $no = 1;
-      while ($data = mysqli_fetch_assoc($tampil)) {
+
+      while ($data = $result->fetch_assoc()) {
     ?>
     <tr>
-      <td><?= $no++ ?></td>
+      <td><?= $no++; ?></td>
       <td><?= $data['nim']; ?></td>
       <td><?= $data['nama_mhs']; ?></td>
-      <td><?= $data['tgl_lahir'] ? $data['tgl_lahir'] : '-' ?></td>
+      <td><?= $data['tgl_lahir'] ?: '-'; ?></td>
       <td><?= $data['alamat']; ?></td>
       <td>
-        <a href="index.php?key=<?= $data['nim']; ?>&p=edit" class="btn btn-warning btn-sm">Edit</a>
-        <a href="proses.php?nim=<?= $data['nim'];?>&aksi=hapus" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
+        <!-- EDIT -->
+        <a href="index.php?p=mahasiswa_edit&nim=<?= $data['nim']; ?>"
+           class="btn btn-warning btn-sm">
+           Edit
+        </a>
+
+        <!-- HAPUS (INI KUNCI) -->
+        <a href="mahasiswa/proses.php?aksi=hapus&nim=<?= $data['nim']; ?>"
+           onclick="return confirm('Yakin ingin menghapus data ini?')"
+           class="btn btn-danger btn-sm">
+           Hapus
+        </a>
       </td>
     </tr>
     <?php } ?>
