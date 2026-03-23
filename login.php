@@ -54,9 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="container mt-5">
     <div class="row justify-content-center">
+        <!-- untuk membuat kolom -->
         <div class="col-md-4">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white text-center">
+                <!-- untuk kasih warna pada card atau kolom  -->
+                <div class="card-header bg-primary text-white text-center"> 
                     <h5 class="mb-0">Login</h5>
                 </div>
                 <div class="card-body">
